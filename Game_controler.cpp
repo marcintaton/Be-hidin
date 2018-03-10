@@ -1,8 +1,10 @@
 #include "Game_controler.h"
 #include "Game_object.h"
 #include "Texture_manager.h"
+#include "Tile_map.h"
 
 std::unique_ptr<Game_object> player;
+std::unique_ptr<Tile_map>    map;
 
 std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
     nullptr;
@@ -47,6 +49,7 @@ void Game_controler::initialize(const char* title,
     }
 
     player.reset(new Game_object("assets/player.png", 10, 20));
+    map.reset(new Tile_map());
 }
 
 void Game_controler::handle_events() {
@@ -75,7 +78,7 @@ void Game_controler::render() {
 
     SDL_RenderClear(renderer.get());
     // stuff to render
-    // SDL_RenderCopy(renderer.get(), player_tex.get(), NULL, &dst_rect);
+    map->draw_map();
     player->render();
 
     SDL_RenderPresent(renderer.get());

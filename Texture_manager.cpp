@@ -12,3 +12,8 @@ Texture_manager::load_texture(const char* file_name) {
 
     return texture;
 }
+
+void Texture_manager::draw(SDL_Texture* texture, SDL_Rect src, SDL_Rect dst) {
+
+    SDL_RenderCopy(Game_controler::renderer.get(), texture, &src, &dst);
+}

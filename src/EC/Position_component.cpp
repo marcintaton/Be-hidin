@@ -1,4 +1,4 @@
-#include "Components.h"
+#include "Position_component.h"
 
 int Position_component::get_x() {
     return x_pos;

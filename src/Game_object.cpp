@@ -1,4 +1,5 @@
 #include "Game_object.h"
+
 #include "Texture_manager.h"
 
 int x_change = 1;

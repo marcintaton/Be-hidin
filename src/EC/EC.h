@@ -59,13 +59,34 @@ class Entity {
     void set_inactive();
 
     template <typename T>
-    bool has_component() const;
+    bool has_component() const {
+        return components_bitset[get_component_type_id<T>()];
+    }
 
     template <typename T, typename... T_args>
-    T& add_component(T_args&&... args);
+    T& add_component(T_args&&... args) {
+
+        T* c(new T(std::forward<T_args>(args)...));
+
+        c->parent_entity = this;
+
+        std::unique_ptr<Component> temp_ptr{c};
+
+        compopnents_vector.emplace_back(std::move(temp_ptr));
+
+        components_array[get_component_type_id<T>()]  = c;
+        components_bitset[get_component_type_id<T>()] = true;
+
+        c->init();
+
+        return *c;
+    }
 
     template <typename T>
-    T& get_component() const;
+    T& get_component() const {
+        auto ptr(components_array[get_component_type_id<T>()]);
+        return *static_cast<T*>(ptr);
+    }
 };
 
 // Entity_manger class

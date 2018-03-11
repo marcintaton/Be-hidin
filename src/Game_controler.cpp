@@ -1,4 +1,6 @@
 #include "Game_controler.h"
+#include "EC/Components.h"
+#include "EC/EC.h"
 #include "Game_object.h"
 #include "Texture_manager.h"
 #include "Tile_map.h"
@@ -8,6 +10,9 @@ std::unique_ptr<Tile_map>    map;
 
 std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
     nullptr;
+
+Entity_manager manger;
+auto&          new_player(manger.add_entity());
 
 Game_controler::Game_controler() {
 }
@@ -50,6 +55,8 @@ void Game_controler::initialize(const char* title,
 
     player.reset(new Game_object("assets/player.png", 10, 20));
     map.reset(new Tile_map());
+
+    new_player.add_component<Position_component>();
 }
 
 void Game_controler::handle_events() {
@@ -68,8 +75,11 @@ void Game_controler::handle_events() {
 
 void Game_controler::update() {
 
-    loop_cnt++;
     player->update();
+    manger.update();
+    std::cout << new_player.get_component<Position_component>().get_x() << " "
+              << new_player.get_component<Position_component>().get_y()
+              << std::endl;
 
     // call update methods for all objects
 }

@@ -6,12 +6,12 @@
 class Tile_map {
 
    private:
-    SDL_Rect                                            src;
-    SDL_Rect                                            dst;
-    std::unique_ptr<SDL_Texture, SDL_texture_destroyer> wall;
-    std::unique_ptr<SDL_Texture, SDL_texture_destroyer> platform;
-    std::unique_ptr<SDL_Texture, SDL_texture_destroyer> sky;
-    int                                                 map[20][25];
+    SDL_Rect     src;
+    SDL_Rect     dst;
+    SDL_Texture* wall;
+    SDL_Texture* platform;
+    SDL_Texture* sky;
+    int          map[20][25];
 
    public:
     Tile_map();

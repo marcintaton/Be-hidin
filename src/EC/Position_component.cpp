@@ -1,5 +1,16 @@
 #include "Position_component.h"
 
+Position_component::Position_component() {
+    x_pos = 0;
+    y_pos = 0;
+}
+
+Position_component::Position_component(int x, int y) {
+
+    y_pos = y;
+    x_pos = x;
+}
+
 int Position_component::get_x() {
     return x_pos;
 }

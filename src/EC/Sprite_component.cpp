@@ -1,9 +1,9 @@
 #include "Sprite_component.h"
-
-Sprite_component::Sprite_component() {
-}
+#include "../Texture_manager.h"
 
 Sprite_component::Sprite_component(const char* tex_path) {
+    texture = Texture_manager::load_texture(tex_path);
+    std::cout << tex_path << std::endl;
 }
 
 Sprite_component::~Sprite_component() {
@@ -32,5 +32,5 @@ void Sprite_component::update() {
 
 void Sprite_component::draw() {
 
-    // Texture_manager::draw()
+    Texture_manager::draw(texture, src, dst);
 }

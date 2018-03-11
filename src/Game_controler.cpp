@@ -9,8 +9,8 @@ std::unique_ptr<Tile_map> map;
 std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
     nullptr;
 
-Entity_manager manger;
-auto&          new_player(manger.add_entity());
+Entity_manager manager;
+auto&          new_player(manager.add_entity());
 
 Game_controler::Game_controler() {
 }
@@ -53,7 +53,8 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
-    new_player.add_component<Position_component>();
+    new_player.add_component<Position_component>(0, 0);
+    new_player.add_component<Sprite_component>("assets/player.png");
 }
 
 void Game_controler::handle_events() {
@@ -72,10 +73,8 @@ void Game_controler::handle_events() {
 
 void Game_controler::update() {
 
-    manger.update();
-    std::cout << new_player.get_component<Position_component>().get_x() << " "
-              << new_player.get_component<Position_component>().get_y()
-              << std::endl;
+    manager.remove_inactive();
+    manager.update();
 
     // call update methods for all objects
 }
@@ -85,14 +84,13 @@ void Game_controler::render() {
     SDL_RenderClear(renderer.get());
     // stuff to render
     map->draw_map();
+    manager.draw();
 
     SDL_RenderPresent(renderer.get());
 }
 
 void Game_controler::clear() {
 
-    // SDL_DestroyWindow(window.get());
-    // SDL_DestroyRenderer(renderer.get());
     SDL_Quit();
 
     std::cout << "Game cleaned" << std::endl;

@@ -16,6 +16,10 @@ Component::~Component() {
 
 // Entity methods
 
+Entity::Entity() {
+    active = true;
+}
+
 void Entity::update() {
     for (auto& c : compopnents_vector) {
         c->update();

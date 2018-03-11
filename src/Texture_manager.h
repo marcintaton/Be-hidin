@@ -6,10 +6,8 @@
 class Texture_manager {
 
    public:
-    static std::unique_ptr<SDL_Texture, SDL_texture_destroyer> load_texture(
-        const char* file_name);
-
-    static void draw(SDL_Texture* texture, SDL_Rect src, SDL_Rect dst);
+    static SDL_Texture* load_texture(const char* file_name);
+    static void         draw(SDL_Texture* texture, SDL_Rect src, SDL_Rect dst);
 };
 
 #endif

@@ -72,15 +72,15 @@ void Tile_map::draw_map() {
 
             switch (tile_type) {
                 case 0: {
-                    Texture_manager::draw(sky.get(), src, dst);
+                    Texture_manager::draw(sky, src, dst);
                     break;
                 }
                 case 1: {
-                    Texture_manager::draw(wall.get(), src, dst);
+                    Texture_manager::draw(wall, src, dst);
                     break;
                 }
                 case 2: {
-                    Texture_manager::draw(platform.get(), src, dst);
+                    Texture_manager::draw(platform, src, dst);
                     break;
                 }
                 default: { break; }

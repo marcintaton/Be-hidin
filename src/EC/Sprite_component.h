@@ -16,7 +16,7 @@ class Sprite_component : public Component {
     SDL_Rect            dst;
 
    public:
-    Sprite_component();
+    Sprite_component() = default;
     Sprite_component(const char* tex_path);
     ~Sprite_component();
 

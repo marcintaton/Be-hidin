@@ -53,6 +53,7 @@ class Entity {
     component_bitset                        components_bitset;
 
    public:
+    Entity();
     void update();
     void draw();
     bool is_active();

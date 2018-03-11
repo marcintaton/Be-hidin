@@ -10,6 +10,9 @@ class Position_component : public Component {
     int y_pos;
 
    public:
+    Position_component();
+    Position_component(int x, int y);
+
     int  get_x();
     int  get_y();
     void set_x(int x);

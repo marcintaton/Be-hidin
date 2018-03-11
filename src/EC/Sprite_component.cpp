@@ -2,11 +2,14 @@
 #include "../Texture_manager.h"
 
 Sprite_component::Sprite_component(const char* tex_path) {
-    texture = Texture_manager::load_texture(tex_path);
-    std::cout << tex_path << std::endl;
+    set_texture(tex_path);
 }
 
 Sprite_component::~Sprite_component() {
+}
+
+void Sprite_component::set_texture(const char* tex_path) {
+    texture = Texture_manager::load_texture(tex_path);
 }
 
 void Sprite_component::init() {

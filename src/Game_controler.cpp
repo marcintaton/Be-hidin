@@ -54,7 +54,7 @@ void Game_controler::initialize(const char* title,
     map.reset(new Tile_map());
 
     new_player.add_component<Position_component>(0, 0);
-    new_player.add_component<Sprite_component>("assets/player.png");
+    new_player.add_component<Sprite_component>("assets/player0.png");
 }
 
 void Game_controler::handle_events() {

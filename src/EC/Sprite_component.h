@@ -20,6 +20,7 @@ class Sprite_component : public Component {
     Sprite_component(const char* tex_path);
     ~Sprite_component();
 
+    void set_texture(const char* tex_path);
     void init() override;
     void update() override;
     void draw() override;

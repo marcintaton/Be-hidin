@@ -3,6 +3,7 @@
 #include "EC/EC.h"
 #include "Texture_manager.h"
 #include "Tile_map.h"
+#include "Vector_2D.h"
 
 std::unique_ptr<Tile_map> map;
 
@@ -53,7 +54,7 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
-    new_player.add_component<Position_component>(0, 0);
+    new_player.add_component<Transform_component>();
     new_player.add_component<Sprite_component>("assets/player0.png");
 }
 
@@ -75,6 +76,8 @@ void Game_controler::update() {
 
     manager.remove_inactive();
     manager.update();
+
+    new_player.get_component<Transform_component>().position += Vector_2D(0, 2);
 
     // call update methods for all objects
 }

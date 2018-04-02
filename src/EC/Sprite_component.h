@@ -5,15 +5,15 @@
 #include "Components.h"
 #include "SDL2/SDL_image.h"
 
-class Position_component;
+class Transform_component;
 
 class Sprite_component : public Component {
 
    private:
-    Position_component* position;
-    SDL_Texture*        texture;
-    SDL_Rect            src;
-    SDL_Rect            dst;
+    Transform_component* transform;
+    SDL_Texture*         texture;
+    SDL_Rect             src;
+    SDL_Rect             dst;
 
    public:
     Sprite_component() = default;

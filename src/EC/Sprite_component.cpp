@@ -14,7 +14,7 @@ void Sprite_component::set_texture(const char* tex_path) {
 
 void Sprite_component::init() {
 
-    position = &parent_entity->get_component<Position_component>();
+    transform = &parent_entity->get_component<Transform_component>();
 
     src.x = 0;
     src.y = 0;
@@ -29,8 +29,8 @@ void Sprite_component::init() {
 
 void Sprite_component::update() {
 
-    dst.x = position->get_x();
-    dst.y = position->get_y();
+    dst.x = (int)transform->position.x;
+    dst.y = (int)transform->position.y;
 }
 
 void Sprite_component::draw() {

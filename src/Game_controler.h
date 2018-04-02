@@ -16,6 +16,7 @@ class Game_controler {
 
    public:
     Game_controler();
+
     ~Game_controler();
 
     void initialize(const char* title,

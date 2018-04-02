@@ -2,6 +2,7 @@
 #define COMPONENTS_H
 
 #include "EC.h"
+#include "Input_controller.h"
 #include "Sprite_component.h"
 #include "Transform_component.h"
 

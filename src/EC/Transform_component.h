@@ -9,6 +9,9 @@ class Transform_component : public Component {
    private:
    public:
     Vector_2D position;
+    Vector_2D velocity;
+    int       speed = 5;
+
     Transform_component();
     Transform_component(double x, double y);
 

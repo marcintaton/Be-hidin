@@ -13,6 +13,8 @@ std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
 Entity_manager manager;
 auto&          new_player(manager.add_entity());
 
+SDL_Event Game_controler::event;
+
 Game_controler::Game_controler() {
 }
 
@@ -56,11 +58,11 @@ void Game_controler::initialize(const char* title,
 
     new_player.add_component<Transform_component>();
     new_player.add_component<Sprite_component>("assets/player0.png");
+    new_player.add_component<Input_controller>();
 }
 
 void Game_controler::handle_events() {
 
-    SDL_Event event;
     SDL_PollEvent(&event);
 
     switch (event.type) {
@@ -76,8 +78,6 @@ void Game_controler::update() {
 
     manager.remove_inactive();
     manager.update();
-
-    new_player.get_component<Transform_component>().position += Vector_2D(0, 2);
 
     // call update methods for all objects
 }

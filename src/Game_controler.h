@@ -32,6 +32,7 @@ class Game_controler {
     bool is_running();
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;
+    static SDL_Event                                             event;
 };
 
 #endif

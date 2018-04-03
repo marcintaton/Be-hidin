@@ -11,6 +11,19 @@ Transform_component::Transform_component(double x, double y) {
     position.x = x;
 }
 
+Transform_component::Transform_component(double x,
+                                         double y,
+                                         int    height,
+                                         int    width,
+                                         int    scale) {
+
+    position.y   = y;
+    position.x   = x;
+    this->height = height;
+    this->width  = width;
+    this->scale  = scale;
+}
+
 void Transform_component::init() {
     velocity.x = 0;
     velocity.y = 0;

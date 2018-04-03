@@ -1,4 +1,5 @@
 #include "Game_controler.h"
+#include "Collision.h"
 #include "EC/Components.h"
 #include "EC/EC.h"
 #include "Texture_manager.h"
@@ -12,6 +13,7 @@ std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
 
 Entity_manager manager;
 auto&          new_player(manager.add_entity());
+auto&          wall(manager.add_entity());
 
 SDL_Event Game_controler::event;
 
@@ -56,9 +58,14 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
-    new_player.add_component<Transform_component>();
+    new_player.add_component<Transform_component>(320, 0, 32, 32, 2);
     new_player.add_component<Sprite_component>("assets/player0.png");
     new_player.add_component<Input_controller>();
+    new_player.add_component<Collider_component>("player");
+
+    wall.add_component<Transform_component>(300, 350, 32, 32, 2);
+    wall.add_component<Sprite_component>("assets/brick.png");
+    wall.add_component<Collider_component>("bricks");
 }
 
 void Game_controler::handle_events() {
@@ -80,6 +87,12 @@ void Game_controler::update() {
     manager.update();
 
     // call update methods for all objects
+
+    if (Collision::aabb(new_player.get_component<Collider_component>().collider,
+                        wall.get_component<Collider_component>().collider)) {
+        new_player.get_component<Transform_component>().scale += 1;
+        std::cout << "HIT" << std::endl;
+    }
 }
 
 void Game_controler::render() {

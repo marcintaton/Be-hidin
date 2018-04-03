@@ -10,10 +10,16 @@ class Transform_component : public Component {
    public:
     Vector_2D position;
     Vector_2D velocity;
-    int       speed = 5;
+
+    int speed = 5;
+
+    int width  = 32;
+    int height = 32;
+    int scale  = 1;
 
     Transform_component();
     Transform_component(double x, double y);
+    Transform_component(double x, double y, int height, int width, int scale);
 
     void init() override;
     void update() override;

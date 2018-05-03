@@ -71,10 +71,10 @@ void Game_controler::initialize(const char* title,
     tile_0.add_component<Tile_component>(20, 20, 32, 32, 1);
     tile_0.add_component<Collider_component>("wall");
 
-    tile_1.add_component<Tile_component>(250, 250, 32, 32, 2);
+    tile_1.add_component<Tile_component>(20, 60, 32, 32, 2);
     tile_1.add_component<Collider_component>("platform");
 
-    tile_2.add_component<Tile_component>(300, 300, 32, 32, 3);
+    tile_2.add_component<Tile_component>(20, 100, 32, 32, 3);
 }
 
 void Game_controler::handle_events() {

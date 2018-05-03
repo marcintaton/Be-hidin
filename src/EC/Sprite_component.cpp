@@ -28,8 +28,8 @@ void Sprite_component::init() {
 
 void Sprite_component::update() {
 
-    dst.x = (int)transform->position.x;
-    dst.y = (int)transform->position.y;
+    dst.x = static_cast<int>(transform->position.x);
+    dst.y = static_cast<int>(transform->position.y);
     dst.h = transform->height * transform->scale;
     dst.w = transform->width * transform->scale;
 }

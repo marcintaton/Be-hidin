@@ -11,6 +11,12 @@ Vector_2D::Vector_2D(double x, double y) {
     this->y = y;
 }
 
+Vector_2D& Vector_2D::zero() {
+    this->x = 0;
+    this->y = 0;
+    return *this;
+}
+
 Vector_2D& Vector_2D::add(const Vector_2D& other) {
     this->x += other.x;
     this->y += other.y;
@@ -43,6 +49,12 @@ Vector_2D& operator*(Vector_2D& vec1, const Vector_2D& vec2) {
 }
 Vector_2D& operator/(Vector_2D& vec1, const Vector_2D& vec2) {
     return vec1.divide(vec2);
+}
+
+Vector_2D& Vector_2D::operator*(const int& i) {
+    this->x *= i;
+    this->y *= i;
+    return *this;
 }
 
 Vector_2D& Vector_2D::operator+=(const Vector_2D& vec) {

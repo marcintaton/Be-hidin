@@ -9,6 +9,8 @@ void Collider_component::init() {
         parent_entity->add_component<Transform_component>();
     }
     transform = &parent_entity->get_component<Transform_component>();
+
+    Game_controler::colliders.push_back(this);
 }
 
 void Collider_component::update() {

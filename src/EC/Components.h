@@ -5,6 +5,7 @@
 #include "EC.h"
 #include "Input_controller.h"
 #include "Sprite_component.h"
+#include "Tile_component.h"
 #include "Transform_component.h"
 
 #endif

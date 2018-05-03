@@ -1,8 +1,7 @@
 #include "Transform_component.h"
 
 Transform_component::Transform_component() {
-    position.x = 0;
-    position.y = 0;
+    position.zero();
 }
 
 Transform_component::Transform_component(double x, double y) {
@@ -25,8 +24,7 @@ Transform_component::Transform_component(double x,
 }
 
 void Transform_component::init() {
-    velocity.x = 0;
-    velocity.y = 0;
+    velocity.zero();
 }
 
 void Transform_component::update() {

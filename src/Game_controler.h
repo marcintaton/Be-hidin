@@ -4,8 +4,11 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <memory>
+#include <vector>
 #include "Helper_structs.h"
 #include "SDL2/SDL_image.h"
+
+class Collider_component;
 
 class Game_controler {
 
@@ -30,6 +33,8 @@ class Game_controler {
     void render();
     void clear();
     bool is_running();
+
+    static std::vector<Collider_component*> colliders;
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;
     static SDL_Event                                             event;

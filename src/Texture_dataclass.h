@@ -9,10 +9,10 @@ class Texture_dataclass {
     static std::map<int, std::string> paths;
 
     static char* return_path(int id) {
-        std::string s = paths.find(id)->second;
-        char*       b = new char[s.length() + 1];
-        std::strcpy(b, s.c_str());
-        return b;
+        std::string s    = paths.find(id)->second;
+        char*       path = new char[s.length() + 1];
+        std::strcpy(path, s.c_str());
+        return path;
     }
 };
 

@@ -13,9 +13,6 @@ std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
 
 Entity_manager manager;
 auto&          new_player(manager.add_entity());
-auto&          tile_0(manager.add_entity());
-auto&          tile_1(manager.add_entity());
-auto&          tile_2(manager.add_entity());
 
 SDL_Event Game_controler::event;
 
@@ -62,19 +59,13 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
+    Tile_map::load_map("assets/map/16x16.map", 16, 16);
+
     new_player.add_component<Transform_component>(320, 0, 32, 32, 2);
     new_player.add_component<Sprite_component>("assets/player0.png");
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
     // new_player.get_component<Transform_component>().velocity.y = 1;
-
-    tile_0.add_component<Tile_component>(20, 20, 32, 32, 1);
-    tile_0.add_component<Collider_component>("wall");
-
-    tile_1.add_component<Tile_component>(20, 60, 32, 32, 2);
-    tile_1.add_component<Collider_component>("platform");
-
-    tile_2.add_component<Tile_component>(20, 100, 32, 32, 3);
 }
 
 void Game_controler::handle_events() {
@@ -95,6 +86,10 @@ void Game_controler::update() {
     manager.remove_inactive();
     manager.update();
 
+    for (auto col : colliders) {
+        Collision::aabb(new_player.get_component<Collider_component>(), *col);
+    }
+
     // call update methods for all objects
 }
 
@@ -102,7 +97,6 @@ void Game_controler::render() {
 
     SDL_RenderClear(renderer.get());
     // stuff to render
-    // map->draw_map();
     manager.draw();
 
     SDL_RenderPresent(renderer.get());
@@ -117,4 +111,9 @@ void Game_controler::clear() {
 
 bool Game_controler::is_running() {
     return running;
+}
+
+void Game_controler::addMapTile(int x, int y, int id) {
+    auto& tile(manager.add_entity());
+    tile.add_component<Tile_component>(x, y, 32, 32, id);
 }

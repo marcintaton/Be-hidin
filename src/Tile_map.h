@@ -6,19 +6,11 @@
 class Tile_map {
 
    private:
-    SDL_Rect     src;
-    SDL_Rect     dst;
-    SDL_Texture* wall;
-    SDL_Texture* platform;
-    SDL_Texture* sky;
-    int          map[20][25];
-
    public:
     Tile_map();
     ~Tile_map();
 
-    void load_map(int map[20][25]);
-    void draw_map();
+    static void load_map(std::string file_path, int size_x, int size_y);
 };
 
 #endif

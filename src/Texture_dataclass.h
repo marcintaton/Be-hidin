@@ -17,8 +17,8 @@ class Texture_dataclass {
 };
 
 std::map<int, std::string> Texture_dataclass::paths = {
-    {1, "assets/wall.png"},
-    {2, "assets/platform.png"},
-    {3, "assets/sky.png"}};
+    {3, "assets/wall.png"},
+    {1, "assets/platform.png"},
+    {2, "assets/sky.png"}};
 
 #endif

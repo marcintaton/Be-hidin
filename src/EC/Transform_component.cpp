@@ -14,7 +14,7 @@ Transform_component::Transform_component(double x,
                                          double y,
                                          int    height,
                                          int    width,
-                                         int    scale) {
+                                         double scale) {
 
     position.y   = y;
     position.x   = x;

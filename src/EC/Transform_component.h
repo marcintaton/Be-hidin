@@ -13,15 +13,19 @@ class Transform_component : public Component {
 
     int speed = 3;
 
-    int width  = 32;
-    int height = 32;
-    int scale  = 1;
+    int    width  = 32;
+    int    height = 32;
+    double scale  = 1;
 
     bool reversed = false;
 
     Transform_component();
     Transform_component(double x, double y);
-    Transform_component(double x, double y, int height, int width, int scale);
+    Transform_component(double x,
+                        double y,
+                        int    height,
+                        int    width,
+                        double scale);
 
     void init() override;
     void update() override;

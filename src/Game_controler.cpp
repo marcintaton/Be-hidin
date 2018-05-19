@@ -69,9 +69,9 @@ void Game_controler::initialize(const char* title,
 
     Tile_map::load_map("assets/map/16x16.map", 16, 16);
 
-    new_player.add_component<Transform_component>(320, 0, 500, 500, 1);
-    new_player.add_component<Sprite_component>("assets/player0.png");
-    new_player.add_component<Animation_component>(9, 100);
+    new_player.add_component<Transform_component>(320, 0, 500, 500, 0.3);
+    new_player.add_component<Sprite_component>("assets/player_anims/player.png",
+                                               true);
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
     new_player.add_group(g_players);

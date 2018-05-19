@@ -17,6 +17,8 @@ class Transform_component : public Component {
     int height = 32;
     int scale  = 1;
 
+    bool reversed = false;
+
     Transform_component();
     Transform_component(double x, double y);
     Transform_component(double x, double y, int height, int width, int scale);

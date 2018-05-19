@@ -6,12 +6,14 @@
 #include "EC.h"
 
 class Transform_component;
+class Animation_component;
 
 class Input_controller : public Component {
 
    private:
    public:
     Transform_component* transform;
+    Animation_component* animation_component;
 
     Input_controller();
 

@@ -9,7 +9,7 @@ Tile_component::Tile_component(int x, int y, int width, int height, int id) {
     rect.h  = height;
     tile_ID = id;
 
-    path = Texture_dataclass::return_path(id);
+    path = Texture_dataclass::return_path("map_tiles", id);
 }
 
 void Tile_component::init() {

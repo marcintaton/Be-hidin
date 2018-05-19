@@ -18,6 +18,14 @@ SDL_Event Game_controler::event;
 
 std::vector<Collider_component*> Game_controler::colliders;
 
+enum grup_tags : std::size_t {
+
+    g_map,
+    g_players,
+    g_enemies,
+    g_colliders
+};
+
 Game_controler::Game_controler() {
 }
 
@@ -61,11 +69,12 @@ void Game_controler::initialize(const char* title,
 
     Tile_map::load_map("assets/map/16x16.map", 16, 16);
 
-    new_player.add_component<Transform_component>(320, 0, 32, 32, 2);
+    new_player.add_component<Transform_component>(320, 0, 500, 500, 1);
     new_player.add_component<Sprite_component>("assets/player0.png");
+    new_player.add_component<Animation_component>(9, 100);
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
-    // new_player.get_component<Transform_component>().velocity.y = 1;
+    new_player.add_group(g_players);
 }
 
 void Game_controler::handle_events() {
@@ -93,11 +102,25 @@ void Game_controler::update() {
     // call update methods for all objects
 }
 
+auto& map_tiles(manager.get_group(g_map));
+auto& players(manager.get_group(g_players));
+auto& enemies(manager.get_group(g_enemies));
+
 void Game_controler::render() {
 
     SDL_RenderClear(renderer.get());
-    // stuff to render
-    manager.draw();
+
+    for (auto& t : map_tiles) {
+        t->draw();
+    }
+    for (auto& p : players) {
+        p->draw();
+    }
+    for (auto& e : enemies) {
+        e->draw();
+    }
+
+    // manager.draw();
 
     SDL_RenderPresent(renderer.get());
 }
@@ -116,4 +139,5 @@ bool Game_controler::is_running() {
 void Game_controler::addMapTile(int x, int y, int id) {
     auto& tile(manager.add_entity());
     tile.add_component<Tile_component>(x, y, 32, 32, id);
+    tile.add_group(g_map);
 }

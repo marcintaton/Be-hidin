@@ -10,24 +10,29 @@
 
 class Component;
 class Entity;
+class Entity_manager;
 
 using component_id = std::size_t;
+using group        = std::size_t;
 
-inline component_id get_component_type_id() {
-    static component_id last_id = 0;
+inline component_id get_new_component_type_id() {
+    static component_id last_id = 0u;
     return last_id++;
 }
 
 template <typename T>
 inline component_id get_component_type_id() noexcept {
-    static component_id type_id = get_component_type_id();
+    static component_id type_id = get_new_component_type_id();
     return type_id;
 }
 
 constexpr std::size_t max_components = 32;
+constexpr std::size_t max_groups     = 32;
 
 using component_bitset = std::bitset<max_components>;
-using component_array  = std::array<Component*, max_components>;
+using group_bitset     = std::bitset<max_groups>;
+
+using component_array = std::array<Component*, max_components>;
 
 // Component class
 
@@ -47,13 +52,15 @@ class Component {
 class Entity {
 
    private:
+    Entity_manager&                         manager;
     bool                                    active;
     std::vector<std::unique_ptr<Component>> compopnents_vector;
     component_array                         components_array;
     component_bitset                        components_bitset;
+    group_bitset                            groups_bitset;
 
    public:
-    Entity();
+    Entity(Entity_manager& _manager);
     void update();
     void draw();
     bool is_active();
@@ -88,6 +95,11 @@ class Entity {
         auto ptr(components_array[get_component_type_id<T>()]);
         return *static_cast<T*>(ptr);
     }
+
+    bool has_group(group group_bitset);
+
+    void add_group(group new_group);
+    void remove_group(group to_rmv);
 };
 
 // Entity_manger class
@@ -95,13 +107,16 @@ class Entity {
 class Entity_manager {
 
    private:
-    std::vector<std::unique_ptr<Entity>> entities_vector;
+    std::vector<std::unique_ptr<Entity>>         entities_vector;
+    std::array<std::vector<Entity*>, max_groups> grouped_entities;
 
    public:
-    void    update();
-    void    draw();
-    void    remove_inactive();
-    Entity& add_entity();
+    void                  update();
+    void                  draw();
+    void                  remove_inactive();
+    void                  add_to_group(Entity* entity, group grp);
+    std::vector<Entity*>& get_group(group grp);
+    Entity&               add_entity();
 };
 
 #endif

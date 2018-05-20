@@ -34,7 +34,7 @@ class Game_controler {
     void clear();
     bool is_running();
 
-    static void addMapTile(int x, int y, int id);
+    static void addMapTile(int src_x, int src_y, int x, int y);
 
     static std::vector<Collider_component*> colliders;
 

@@ -1,10 +1,13 @@
 #include "Game_controler.h"
+#include "Camera.h"
 #include "Collision.h"
 #include "EC/Components.h"
 #include "EC/EC.h"
 #include "Texture_manager.h"
 #include "Tile_map.h"
 #include "Vector_2D.h"
+
+const char* map_tileset = "assets/map/tileset.png";
 
 std::unique_ptr<Tile_map> map;
 
@@ -13,6 +16,8 @@ std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
 
 Entity_manager manager;
 auto&          new_player(manager.add_entity());
+
+Camera* camera;
 
 SDL_Event Game_controler::event;
 
@@ -25,6 +30,10 @@ enum grup_tags : std::size_t {
     g_enemies,
     g_colliders
 };
+
+auto& map_tiles(manager.get_group(g_map));
+auto& players(manager.get_group(g_players));
+auto& enemies(manager.get_group(g_enemies));
 
 Game_controler::Game_controler() {
 }
@@ -67,14 +76,17 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
-    Tile_map::load_map("assets/map/16x16.map", 16, 16);
+    Tile_map::load_map("assets/map/level.map", 50, 40, 0, -20);
 
-    new_player.add_component<Transform_component>(320, 0, 500, 500, 0.3);
+    new_player.add_component<Transform_component>(0, 512, 500, 500, 0.1);
     new_player.add_component<Sprite_component>("assets/player_anims/player.png",
                                                true);
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
     new_player.add_group(g_players);
+
+    camera =
+        new Camera(&new_player.get_component<Transform_component>(), map_tiles);
 }
 
 void Game_controler::handle_events() {
@@ -95,16 +107,14 @@ void Game_controler::update() {
     manager.remove_inactive();
     manager.update();
 
+    camera->update();
+
     for (auto col : colliders) {
         Collision::aabb(new_player.get_component<Collider_component>(), *col);
     }
 
     // call update methods for all objects
 }
-
-auto& map_tiles(manager.get_group(g_map));
-auto& players(manager.get_group(g_players));
-auto& enemies(manager.get_group(g_enemies));
 
 void Game_controler::render() {
 
@@ -136,8 +146,8 @@ bool Game_controler::is_running() {
     return running;
 }
 
-void Game_controler::addMapTile(int x, int y, int id) {
+void Game_controler::addMapTile(int src_x, int src_y, int x, int y) {
     auto& tile(manager.add_entity());
-    tile.add_component<Tile_component>(x, y, 32, 32, id);
+    tile.add_component<Tile_component>(src_x, src_y, x, y, map_tileset);
     tile.add_group(g_map);
 }

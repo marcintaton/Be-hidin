@@ -16,7 +16,7 @@ bool Collision::aabb(const Collider_component& col_a,
                      const Collider_component& col_b) {
 
     if (aabb(col_a.collider, col_b.collider)) {
-        std::cout << col_a.tag << " hit " << col_b.tag << "\n";
+        // std::cout << col_a.tag << " hit " << col_b.tag << "\n";
         return true;
     } else {
         return false;

@@ -10,7 +10,11 @@ class Tile_map {
     Tile_map();
     ~Tile_map();
 
-    static void load_map(std::string file_path, int size_x, int size_y);
+    static void load_map(std::string file_path,
+                         int         size_x,
+                         int         size_y,
+                         int         offset_x,
+                         int         offset_y);
 };
 
 #endif

@@ -4,26 +4,25 @@
 #include <SDL2/SDL.h>
 #include "Components.h"
 #include "EC.h"
-#include "Sprite_component.h"
-#include "Transform_component.h"
-
-class Sprite_component;
 
 class Tile_component : public Component {
 
    private:
    public:
-    Transform_component* transform;
-    Sprite_component*    sprite;
-
-    SDL_Rect    rect;
-    int         tile_ID;
-    const char* path;
+    SDL_Rect     src;
+    SDL_Rect     dst;
+    SDL_Texture* texture;
 
     Tile_component() = default;
-    Tile_component(int x, int y, int width, int height, int id);
+    Tile_component(int         src_x,
+                   int         src_y,
+                   int         pos_x,
+                   int         pos_y,
+                   const char* path);
+    ~Tile_component();
 
     void init() override;
+    void draw() override;
 };
 
 #endif

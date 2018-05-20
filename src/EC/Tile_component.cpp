@@ -1,27 +1,33 @@
 #include "Tile_component.h"
-#include "../Texture_dataclass.h"
+#include "../Texture_manager.h"
 
-Tile_component::Tile_component(int x, int y, int width, int height, int id) {
+Tile_component::Tile_component(int         src_x,
+                               int         src_y,
+                               int         pos_x,
+                               int         pos_y,
+                               const char* path) {
 
-    rect.x  = x;
-    rect.y  = y;
-    rect.w  = width;
-    rect.h  = height;
-    tile_ID = id;
+    texture = Texture_manager::load_texture(path);
 
-    path = Texture_dataclass::return_path("map_tiles", id);
+    src.x = src_x;
+    src.y = src_y;
+    src.w = 32;
+    src.h = 32;
+
+    dst.x = pos_x;
+    dst.y = pos_y;
+    dst.w = 32;
+    dst.h = 32;
+}
+
+Tile_component::~Tile_component() {
+    SDL_DestroyTexture(texture);
 }
 
 void Tile_component::init() {
+}
 
-    if (!parent_entity->has_component<Transform_component>()) {
-        parent_entity->add_component<Transform_component>(rect.x, rect.y,
-                                                          rect.w, rect.h, 1);
-    }
-    transform = &parent_entity->get_component<Transform_component>();
+void Tile_component::draw() {
 
-    if (!parent_entity->has_component<Sprite_component>()) {
-        parent_entity->add_component<Sprite_component>(path);
-    }
-    sprite = &parent_entity->get_component<Sprite_component>();
+    Texture_manager::draw(texture, src, dst, SDL_FLIP_NONE);
 }

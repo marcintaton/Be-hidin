@@ -11,6 +11,7 @@ class Camera {
    private:
     Transform_component*  player_trans;
     std::vector<Entity*>& tiles;
+    std::vector<Entity*>& colliders;
     int                   offset_x;
     int                   offset_y;
     int                   resolutiom_w;
@@ -19,6 +20,7 @@ class Camera {
    public:
     Camera(Transform_component*  _player_trans,
            std::vector<Entity*>& _tiles,
+           std::vector<Entity*>& _colliders,
            int                   _resolutiom_w,
            int                   _resolutiom_h);
     ~Camera();

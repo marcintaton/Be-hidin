@@ -21,19 +21,9 @@ Camera* camera;
 
 SDL_Event Game_controler::event;
 
-std::vector<Collider_component*> Game_controler::colliders;
-
-enum grup_tags : std::size_t {
-
-    g_map,
-    g_players,
-    g_enemies,
-    g_colliders
-};
-
-auto& map_tiles(manager.get_group(g_map));
-auto& players(manager.get_group(g_players));
-auto& enemies(manager.get_group(g_enemies));
+auto& map_tiles(manager.get_group(Game_controler::g_map));
+auto& players(manager.get_group(Game_controler::g_players));
+auto& colliders(manager.get_group(Game_controler::g_colliders));
 
 Game_controler::Game_controler() {
 }
@@ -74,11 +64,11 @@ void Game_controler::initialize(const char* title,
         running = false;
     }
 
-    map.reset(new Tile_map());
+    map.reset(new Tile_map(map_tileset, 1, 32));
 
-    Tile_map::load_map("assets/map/level.map", 52, 42, -1, -21);
+    map->load_map("assets/map/level.map", 50, 40, 0, -20);
 
-    new_player.add_component<Transform_component>(0, 544, 32, 32, 1);
+    new_player.add_component<Transform_component>(50, 50, 32, 32, 1);
     new_player.add_component<Sprite_component>("assets/animations/player.png",
                                                true);
     new_player.add_component<Input_controller>();
@@ -86,7 +76,7 @@ void Game_controler::initialize(const char* title,
     new_player.add_group(g_players);
 
     camera = new Camera(&new_player.get_component<Transform_component>(),
-                        map_tiles, width, height);
+                        map_tiles, colliders, width, height);
 }
 
 void Game_controler::handle_events() {
@@ -104,16 +94,26 @@ void Game_controler::handle_events() {
 
 void Game_controler::update() {
 
+    SDL_Rect  p_col = new_player.get_component<Collider_component>().collider;
+    Vector_2D player_pos =
+        new_player.get_component<Transform_component>().position;
+
     manager.remove_inactive();
     manager.update();
 
-    camera->update();
+    for (auto& c : colliders) {
+        SDL_Rect c_col = c->get_component<Collider_component>().collider;
+        if (Collision::aabb(c_col, p_col)) {
 
-    for (auto col : colliders) {
-        Collision::aabb(new_player.get_component<Collider_component>(), *col);
+            Vector_2D offset;
+            offset.zero();
+
+            new_player.get_component<Transform_component>().position =
+                player_pos + offset;
+        }
     }
 
-    // call update methods for all objects
+    camera->update();
 }
 
 void Game_controler::render() {
@@ -123,11 +123,13 @@ void Game_controler::render() {
     for (auto& t : map_tiles) {
         t->draw();
     }
+
     for (auto& p : players) {
         p->draw();
     }
-    for (auto& e : enemies) {
-        e->draw();
+
+    for (auto& c : colliders) {
+        c->draw();
     }
 
     // manager.draw();
@@ -144,10 +146,4 @@ void Game_controler::clear() {
 
 bool Game_controler::is_running() {
     return running;
-}
-
-void Game_controler::addMapTile(int src_x, int src_y, int x, int y) {
-    auto& tile(manager.add_entity());
-    tile.add_component<Tile_component>(src_x, src_y, x, y, map_tileset);
-    tile.add_group(g_map);
 }

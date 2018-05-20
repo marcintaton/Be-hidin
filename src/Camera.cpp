@@ -2,12 +2,12 @@
 
 Camera::Camera(Transform_component*  _player_trans,
                std::vector<Entity*>& _tiles,
+               std::vector<Entity*>& _colliders,
                int                   _resolutiom_w,
                int                   _resolutiom_h)
-    : tiles(_tiles) {
+    : tiles(_tiles), colliders(_colliders) {
 
     player_trans = _player_trans;
-    // tiles        = _tiles;
 
     offset_x = 0;
     offset_y = 0;
@@ -44,6 +44,14 @@ void Camera::update() {
             if (t->has_component<Tile_component>()) {
                 t->get_component<Tile_component>().dst.x += offset_x;
                 t->get_component<Tile_component>().dst.y += offset_y;
+            }
+        }
+        for (auto& c : colliders) {
+            if (c->has_component<Collider_component>()) {
+                c->get_component<Collider_component>().collider.x += offset_x;
+                c->get_component<Collider_component>().dst.x += offset_x;
+                c->get_component<Collider_component>().collider.y += offset_y;
+                c->get_component<Collider_component>().dst.y += offset_y;
             }
         }
         offset_x = 0;

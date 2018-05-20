@@ -8,6 +8,9 @@
 class Tile_component : public Component {
 
    private:
+    int scale;
+    int size;
+
    public:
     SDL_Rect     src;
     SDL_Rect     dst;
@@ -18,6 +21,8 @@ class Tile_component : public Component {
                    int         src_y,
                    int         pos_x,
                    int         pos_y,
+                   int         _size,
+                   int         _scale,
                    const char* path);
     ~Tile_component();
 

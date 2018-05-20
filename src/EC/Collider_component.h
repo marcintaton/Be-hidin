@@ -16,10 +16,16 @@ class Collider_component : public Component {
     std::string          tag;
     Transform_component* transform;
 
-    Collider_component(std::string tag);
+    SDL_Texture* coll_tex;
+    SDL_Rect     src;
+    SDL_Rect     dst;
+
+    Collider_component(std::string _tag);
+    Collider_component(std::string _tag, int pos_x, int pos_y, int size);
 
     void init() override;
     void update() override;
+    void draw() override;
 };
 
 #endif

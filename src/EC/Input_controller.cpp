@@ -13,12 +13,13 @@ void Input_controller::update() {
     if (Game_controler::event.type == SDL_KEYDOWN) {
         switch (Game_controler::event.key.keysym.sym) {
             case SDLK_w:
+                // if (transform->velocity.y == 1) {
+                //     transform->velocity.y = -3;
+                // }
                 transform->velocity.y = -1;
-                sprite->play("run");
                 break;
             case SDLK_s:
                 transform->velocity.y = 1;
-                sprite->play("run");
                 break;
             case SDLK_a:
                 transform->velocity.x = -1;

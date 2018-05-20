@@ -34,9 +34,7 @@ class Game_controler {
     void clear();
     bool is_running();
 
-    static void addMapTile(int src_x, int src_y, int x, int y);
-
-    static std::vector<Collider_component*> colliders;
+    enum grup_tags : std::size_t { g_map, g_players, g_enemies, g_colliders };
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;
     static SDL_Event                                             event;

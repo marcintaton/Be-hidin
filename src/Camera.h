@@ -13,9 +13,14 @@ class Camera {
     std::vector<Entity*>& tiles;
     int                   offset_x;
     int                   offset_y;
+    int                   resolutiom_w;
+    int                   resolutiom_h;
 
    public:
-    Camera(Transform_component* _player_trans, std::vector<Entity*>& _tiles);
+    Camera(Transform_component*  _player_trans,
+           std::vector<Entity*>& _tiles,
+           int                   _resolutiom_w,
+           int                   _resolutiom_h);
     ~Camera();
 
     void update();

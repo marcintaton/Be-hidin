@@ -76,7 +76,7 @@ void Game_controler::initialize(const char* title,
 
     map.reset(new Tile_map());
 
-    Tile_map::load_map("assets/map/level.map", 50, 40, 0, -20);
+    Tile_map::load_map("assets/map/level.map", 52, 42, -1, -21);
 
     new_player.add_component<Transform_component>(0, 544, 32, 32, 1);
     new_player.add_component<Sprite_component>("assets/animations/player.png",
@@ -85,8 +85,8 @@ void Game_controler::initialize(const char* title,
     new_player.add_component<Collider_component>("player");
     new_player.add_group(g_players);
 
-    camera =
-        new Camera(&new_player.get_component<Transform_component>(), map_tiles);
+    camera = new Camera(&new_player.get_component<Transform_component>(),
+                        map_tiles, width, height);
 }
 
 void Game_controler::handle_events() {

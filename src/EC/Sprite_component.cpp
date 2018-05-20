@@ -8,8 +8,8 @@ Sprite_component::Sprite_component(const char* tex_path) {
 Sprite_component::Sprite_component(const char* tex_path, bool _animated) {
 
     animated       = _animated;
-    Animation idle = Animation(0, 10, 100);
-    Animation run  = Animation(1, 10, 100);
+    Animation idle = Animation(0, 4, 100);
+    Animation run  = Animation(1, 6, 100);
 
     animations.emplace("idle", idle);
     animations.emplace("run", run);

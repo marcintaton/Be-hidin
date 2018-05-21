@@ -39,12 +39,12 @@ void Physics_component::late_update() {
     for (auto& c : colliders) {
         SDL_Rect c_col = c->get_component<Collider_component>().collider;
 
-        if (Collision::aabb_low_edge(rollback_collider, c_col)) {
+        if (Collision::aabb_low_edge(rollback_collider, c_col) ||
+            Collision::aabb_top_edge(rollback_collider, c_col)) {
             gravity               = false;
             transform->position.y = rollback_position.y;
         }
         if (Collision::aabb(c_col, rollback_collider)) {
-
             transform->position.x = rollback_position.x;
         }
     }

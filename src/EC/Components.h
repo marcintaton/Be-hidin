@@ -4,6 +4,7 @@
 #include "Collider_component.h"
 #include "EC.h"
 #include "Input_controller.h"
+#include "Physics_component.h"
 #include "Sprite_component.h"
 #include "Tile_component.h"
 #include "Transform_component.h"

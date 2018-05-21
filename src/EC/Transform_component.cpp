@@ -25,16 +25,10 @@ Transform_component::Transform_component(double x,
 
 void Transform_component::init() {
     velocity.zero();
-    // velocity.y = 1;
+    velocity.y = 1;
 }
 
 void Transform_component::update() {
-
-    // if (velocity.y < 1) {
-    //     velocity.y += 0.2;
-    // } else if (velocity.y > 1) {
-    //     velocity.y = 1;
-    // }
 
     position.x += velocity.x * speed;
     position.y += velocity.y * speed;

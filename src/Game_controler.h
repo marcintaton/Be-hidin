@@ -34,7 +34,13 @@ class Game_controler {
     void clear();
     bool is_running();
 
-    enum grup_tags : std::size_t { g_map, g_players, g_enemies, g_colliders };
+    enum grup_tags : std::size_t {
+        g_map,
+        g_players,
+        g_enemies,
+        g_colliders,
+        g_physiccs_affected
+    };
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;
     static SDL_Event                                             event;

@@ -5,7 +5,13 @@
 void Component::init() {
 }
 
+void Component::quick_update() {
+}
+
 void Component::update() {
+}
+
+void Component::late_update() {
 }
 
 void Component::draw() {
@@ -20,9 +26,21 @@ Entity::Entity(Entity_manager& _manager) : manager(_manager) {
     active = true;
 }
 
+void Entity::quick_update() {
+    for (auto& c : compopnents_vector) {
+        c->quick_update();
+    }
+}
+
 void Entity::update() {
     for (auto& c : compopnents_vector) {
         c->update();
+    }
+}
+
+void Entity::late_update() {
+    for (auto& c : compopnents_vector) {
+        c->late_update();
     }
 }
 
@@ -55,9 +73,21 @@ void Entity::remove_group(group to_rmv) {
 
 // Manager methods
 
+void Entity_manager::quick_update() {
+    for (auto& e : entities_vector) {
+        e->quick_update();
+    }
+}
+
 void Entity_manager::update() {
     for (auto& e : entities_vector) {
         e->update();
+    }
+}
+
+void Entity_manager::late_update() {
+    for (auto& e : entities_vector) {
+        e->late_update();
     }
 }
 

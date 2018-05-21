@@ -41,7 +41,9 @@ class Component {
    public:
     Entity*      parent_entity;
     virtual void init();
+    virtual void quick_update();
     virtual void update();
+    virtual void late_update();
     virtual void draw();
 
     virtual ~Component();
@@ -61,7 +63,9 @@ class Entity {
 
    public:
     Entity(Entity_manager& _manager);
+    void quick_update();
     void update();
+    void late_update();
     void draw();
     bool is_active();
     void set_inactive();
@@ -111,7 +115,9 @@ class Entity_manager {
     std::array<std::vector<Entity*>, max_groups> grouped_entities;
 
    public:
+    void                  quick_update();
     void                  update();
+    void                  late_update();
     void                  draw();
     void                  remove_inactive();
     void                  add_to_group(Entity* entity, group grp);

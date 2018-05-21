@@ -21,9 +21,10 @@ Camera* camera;
 
 SDL_Event Game_controler::event;
 
-auto& map_tiles(manager.get_group(Game_controler::g_map));
-auto& players(manager.get_group(Game_controler::g_players));
-auto& colliders(manager.get_group(Game_controler::g_colliders));
+auto&                 map_tiles(manager.get_group(Game_controler::g_map));
+auto&                 players(manager.get_group(Game_controler::g_players));
+std::vector<Entity*>& colliders(manager.get_group(Game_controler::g_colliders));
+auto& physics_obj(manager.get_group(Game_controler::g_physiccs_affected));
 
 Game_controler::Game_controler() {
 }
@@ -73,6 +74,7 @@ void Game_controler::initialize(const char* title,
                                                true);
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
+    new_player.add_component<Physics_component>();
     new_player.add_group(g_players);
 
     camera = new Camera(&new_player.get_component<Transform_component>(),
@@ -94,24 +96,15 @@ void Game_controler::handle_events() {
 
 void Game_controler::update() {
 
-    SDL_Rect  p_col = new_player.get_component<Collider_component>().collider;
-    Vector_2D player_pos =
-        new_player.get_component<Transform_component>().position;
+    // SDL_Rect  p_col =
+    // new_player.get_component<Collider_component>().collider; Vector_2D
+    // player_pos =
+    //     new_player.get_component<Transform_component>().position;
 
     manager.remove_inactive();
+    manager.quick_update();
     manager.update();
-
-    for (auto& c : colliders) {
-        SDL_Rect c_col = c->get_component<Collider_component>().collider;
-        if (Collision::aabb(c_col, p_col)) {
-
-            Vector_2D offset;
-            offset.zero();
-
-            new_player.get_component<Transform_component>().position =
-                player_pos + offset;
-        }
-    }
+    manager.late_update();
 
     camera->update();
 }

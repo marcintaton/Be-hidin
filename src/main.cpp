@@ -5,7 +5,7 @@ std::unique_ptr<Game_controler> game_controler = nullptr;
 
 int main(int argc, char* argv[]) {
 
-    const int max_FPS            = 100;
+    const int max_FPS            = 60;
     const int max_frame_duration = 1000 / max_FPS;
 
     Uint32 frame_start;

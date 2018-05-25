@@ -25,7 +25,7 @@ void Physics_component::quick_update() {
     } else {
         transform->velocity.y = 0;
     }
-    std::cout << gravity << std::endl;
+    // std::cout << gravity << std::endl;
 }
 
 void Physics_component::update() {
@@ -39,13 +39,35 @@ void Physics_component::late_update() {
     for (auto& c : colliders) {
         SDL_Rect c_col = c->get_component<Collider_component>().collider;
 
-        if (Collision::aabb_low_edge(rollback_collider, c_col) ||
-            Collision::aabb_top_edge(rollback_collider, c_col)) {
+        if (Collision::aabb_edge_bottom(rollback_collider, c_col) ||
+            Collision::aabb_edge_top(rollback_collider, c_col)) {
             gravity               = false;
             transform->position.y = rollback_position.y;
         }
         if (Collision::aabb(c_col, rollback_collider)) {
             transform->position.x = rollback_position.x;
+        } else if (Collision::aabb_edge_right(rollback_collider, c_col) ||
+                   Collision::aabb_edge_left(rollback_collider, c_col)) {
+            // std::cout << "wall hit " << std::endl;
+        }
+
+        if (Collision::aabb_pt_bottom(rollback_collider, c_col)) {
+            std::cout << "bottom" << std::endl;
+        }
+        if (Collision::aabb_pt_left_high(rollback_collider, c_col)) {
+            std::cout << "left high" << std::endl;
+        }
+        if (Collision::aabb_pt_left_low(rollback_collider, c_col)) {
+            std::cout << "left low" << std::endl;
+        }
+        if (Collision::aabb_pt_right_high(rollback_collider, c_col)) {
+            std::cout << "right high" << std::endl;
+        }
+        if (Collision::aabb_pt_right_low(rollback_collider, c_col)) {
+            std::cout << "right low" << std::endl;
+        }
+        if (Collision::aabb_pt_top(rollback_collider, c_col)) {
+            std::cout << "top" << std::endl;
         }
     }
 }

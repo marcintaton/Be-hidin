@@ -48,7 +48,6 @@ void Physics_component::late_update() {
             transform->position.x = rollback_position.x;
         } else if (Collision::aabb_edge_right(rollback_collider, c_col) ||
                    Collision::aabb_edge_left(rollback_collider, c_col)) {
-            // std::cout << "wall hit " << std::endl;
         }
 
         if (Collision::aabb_pt_bottom(rollback_collider, c_col)) {

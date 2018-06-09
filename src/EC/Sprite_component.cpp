@@ -7,12 +7,18 @@ Sprite_component::Sprite_component(const char* tex_path) {
 
 Sprite_component::Sprite_component(const char* tex_path, bool _animated) {
 
-    animated       = _animated;
-    Animation idle = Animation(0, 4, 100);
-    Animation run  = Animation(1, 6, 100);
+    animated             = _animated;
+    Animation idle       = Animation(0, 4, 100);
+    Animation run        = Animation(1, 6, 100);
+    Animation jump       = Animation(2, 2, 100);
+    Animation climb      = Animation(3, 2, 100);
+    Animation climb_idle = Animation(3, 1, 100);
 
     animations.emplace("idle", idle);
     animations.emplace("run", run);
+    animations.emplace("jump", jump);
+    animations.emplace("climb", climb);
+    animations.emplace("climb_idle", climb_idle);
 
     play("idle");
 
@@ -64,4 +70,12 @@ void Sprite_component::play(std::string anim_name) {
     anim_frames = animations[anim_name].frame_num;
     anim_index  = animations[anim_name].index;
     anim_delay  = animations[anim_name].animation_delay;
+}
+
+void Sprite_component::flip(bool flip) {
+    if (flip) {
+        sprite_flip = SDL_FLIP_HORIZONTAL;
+    } else {
+        sprite_flip = SDL_FLIP_NONE;
+    }
 }

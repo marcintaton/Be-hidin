@@ -37,6 +37,7 @@ class Sprite_component : public Component {
     void draw() override;
 
     void play(std::string amin_name);
+    void flip(bool flip);
 };
 
 #endif

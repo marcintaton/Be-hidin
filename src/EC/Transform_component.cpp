@@ -25,7 +25,7 @@ Transform_component::Transform_component(double x,
 
 void Transform_component::init() {
     velocity.zero();
-    velocity.y = 1;
+    // velocity.y = 1;
 }
 
 void Transform_component::update() {

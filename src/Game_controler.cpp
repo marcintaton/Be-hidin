@@ -25,6 +25,7 @@ auto&                 map_tiles(manager.get_group(Game_controler::g_map));
 auto&                 players(manager.get_group(Game_controler::g_players));
 std::vector<Entity*>& colliders(manager.get_group(Game_controler::g_colliders));
 auto& physics_obj(manager.get_group(Game_controler::g_physiccs_affected));
+auto& projectiles(manager.get_group(Game_controler::g_projectiles));
 
 Game_controler::Game_controler() {
 }
@@ -74,7 +75,7 @@ void Game_controler::initialize(const char* title,
                                                true);
     new_player.add_component<Input_controller>();
     new_player.add_component<Collider_component>("player");
-    new_player.add_component<Physics_component>();
+    new_player.add_component<State_machine>();
     new_player.add_group(g_players);
 
     camera = new Camera(&new_player.get_component<Transform_component>(),
@@ -118,6 +119,10 @@ void Game_controler::render() {
     }
 
     for (auto& p : players) {
+        p->draw();
+    }
+
+    for (auto& p : projectiles) {
         p->draw();
     }
 

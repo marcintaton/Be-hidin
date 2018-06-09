@@ -4,7 +4,7 @@
 bool Collision::aabb(const SDL_Rect& rec_a, const SDL_Rect& rec_b) {
 
     return (rec_a.x + rec_a.w >= rec_b.x && rec_b.x + rec_b.w >= rec_a.x &&
-            rec_a.y + rec_a.h > rec_b.y && rec_b.y + rec_b.h > rec_a.y);
+            rec_a.y + rec_a.h >= rec_b.y && rec_b.y + rec_b.h >= rec_a.y);
 }
 
 bool Collision::aabb(const Collider_component& col_a,
@@ -16,8 +16,8 @@ bool Collision::aabb(const Collider_component& col_a,
 bool Collision::aabb_edge_bottom(const SDL_Rect& rec_a, const SDL_Rect& rec_b) {
     // rec_a - main collider : low edge collision detected on this
     // rec_b - secondary collider : low edge collision detected against this
-    return (rec_a.x <= rec_b.x + rec_b.w && rec_a.x + rec_a.w >= rec_b.x &&
-            rec_a.y <= rec_b.y && rec_a.y + rec_a.h >= rec_b.y);
+    return (rec_a.x < rec_b.x + rec_b.w && rec_a.x + rec_a.w > rec_b.x &&
+            rec_a.y < rec_b.y && rec_a.y + rec_a.h > rec_b.y);
 }
 
 bool Collision::aabb_edge_bottom(const Collider_component& col_a,

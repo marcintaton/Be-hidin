@@ -54,7 +54,6 @@ class Component {
 class Entity {
 
    private:
-    Entity_manager&                         manager;
     bool                                    active;
     std::vector<std::unique_ptr<Component>> compopnents_vector;
     component_array                         components_array;
@@ -62,6 +61,8 @@ class Entity {
     group_bitset                            groups_bitset;
 
    public:
+    // TODO: resolve publicity ot manager
+    Entity_manager& manager;
     Entity(Entity_manager& _manager);
     void quick_update();
     void update();

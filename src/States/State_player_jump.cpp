@@ -1,6 +1,7 @@
 #include "State_player_jump.h"
 #include <iostream>
 #include "../Collision.h"
+#include "../EC/Shooter_component.h"
 
 extern std::vector<Entity*>& colliders;
 
@@ -31,6 +32,10 @@ void State_player_jump::on_keydown() {
         case SDLK_d:
             parent_machine->transform->velocity.x = 1;
             parent_machine->sprite->flip(false);
+            break;
+        case SDLK_e:
+            parent_machine->parent_entity->get_component<Shooter_component>()
+                .shot();
             break;
         default:
             break;
@@ -108,19 +113,19 @@ void State_player_jump::late_update() {
             parent_machine->set_active("player_idle");
         }
 
-        if (Collision::aabb_pt_right_high(parent_machine->rollback_collider,
-                                          c_col) &&
-            Collision::aabb_pt_right_low(parent_machine->rollback_collider,
-                                         c_col)) {
-            parent_machine->set_active("player_climb_r");
-        }
+        // if (Collision::aabb_pt_right_high(parent_machine->rollback_collider,
+        //                                   c_col) &&
+        //     Collision::aabb_pt_right_low(parent_machine->rollback_collider,
+        //                                  c_col)) {
+        //     parent_machine->set_active("player_climb_r");
+        // }
 
-        if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
-                                         c_col) &&
-            Collision::aabb_pt_left_low(parent_machine->rollback_collider,
-                                        c_col)) {
-            parent_machine->set_active("player_climb_l");
-        }
+        // if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
+        //                                  c_col) &&
+        //     Collision::aabb_pt_left_low(parent_machine->rollback_collider,
+        //                                 c_col)) {
+        //     parent_machine->set_active("player_climb_l");
+        // }
 
         // if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
         //                                  c_col)) {

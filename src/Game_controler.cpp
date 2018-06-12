@@ -1,10 +1,10 @@
 #include "Game_controler.h"
-#include "Camera.h"
 #include "Collision.h"
 #include "EC/Components.h"
 #include "EC/EC.h"
+#include "Factories/Factories.h"
+#include "Singletons/Singletons.h"
 #include "Texture_manager.h"
-#include "Tile_map.h"
 #include "Vector_2D.h"
 
 const char* map_tileset = "assets/map/tileset.png";
@@ -15,17 +15,17 @@ std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> Game_controler::renderer =
     nullptr;
 
 Entity_manager manager;
-auto&          new_player(manager.add_entity());
 
 Camera* camera;
 
 SDL_Event Game_controler::event;
 
-auto&                 map_tiles(manager.get_group(Game_controler::g_map));
-auto&                 players(manager.get_group(Game_controler::g_players));
-std::vector<Entity*>& colliders(manager.get_group(Game_controler::g_colliders));
+auto& map_tiles(manager.get_group(Game_controler::g_map));
+auto& players(manager.get_group(Game_controler::g_players));
+auto& enemies(manager.get_group(Game_controler::g_enemies));
 auto& physics_obj(manager.get_group(Game_controler::g_physiccs_affected));
 auto& projectiles(manager.get_group(Game_controler::g_projectiles));
+std::vector<Entity*>& colliders(manager.get_group(Game_controler::g_colliders));
 
 Game_controler::Game_controler() {
 }
@@ -55,7 +55,8 @@ void Game_controler::initialize(const char* title,
             std::cout << "window initialized" << std::endl;
         }
 
-        renderer.reset(SDL_CreateRenderer(window.get(), -1, 0));
+        renderer.reset(
+            SDL_CreateRenderer(window.get(), -1, SDL_RENDERER_ACCELERATED));
         if (renderer.get()) {
             std::cout << "renderer initialized" << std::endl;
             SDL_SetRenderDrawColor(renderer.get(), 0, 128, 255, 255);
@@ -66,20 +67,24 @@ void Game_controler::initialize(const char* title,
         running = false;
     }
 
+    Player_factory::create(50, 50, 32, 32, 1, "assets/animations/player.png",
+                           true, "player");
+
+    Turret_enemy_factory::create(300, 545, 32, 32, 1,
+                                 "assets/textures/turret.png", "enemy_turret",
+                                 "assets/textures/projectile.png", 1);
+
     map.reset(new Tile_map(map_tileset, 1, 32));
 
     map->load_map("assets/map/level.map", 50, 40, 0, -20);
 
-    new_player.add_component<Transform_component>(50, 50, 32, 32, 1);
-    new_player.add_component<Sprite_component>("assets/animations/player.png",
-                                               true);
-    new_player.add_component<Input_controller>();
-    new_player.add_component<Collider_component>("player");
-    new_player.add_component<State_machine>();
-    new_player.add_group(g_players);
+    Camera::Create_instance(
+        &(Player::Get_instance())->get_component<Transform_component>(),
+        map_tiles, colliders, width, height);
 
-    camera = new Camera(&new_player.get_component<Transform_component>(),
-                        map_tiles, colliders, width, height);
+    // camera = new
+    // Camera(&Player::instance->get_component<Transform_component>(),
+    //                     map_tiles, colliders, width, height);
 }
 
 void Game_controler::handle_events() {
@@ -97,17 +102,12 @@ void Game_controler::handle_events() {
 
 void Game_controler::update() {
 
-    // SDL_Rect  p_col =
-    // new_player.get_component<Collider_component>().collider; Vector_2D
-    // player_pos =
-    //     new_player.get_component<Transform_component>().position;
-
     manager.remove_inactive();
     manager.quick_update();
     manager.update();
     manager.late_update();
 
-    camera->update();
+    Camera::Get_instance()->update();
 }
 
 void Game_controler::render() {
@@ -120,6 +120,10 @@ void Game_controler::render() {
 
     for (auto& p : players) {
         p->draw();
+    }
+
+    for (auto& e : enemies) {
+        e->draw();
     }
 
     for (auto& p : projectiles) {

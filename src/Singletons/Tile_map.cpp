@@ -1,8 +1,8 @@
 #include "Tile_map.h"
 #include <fstream>
-#include "EC/Components.h"
-#include "EC/EC.h"
-#include "Game_controler.h"
+#include "../EC/Components.h"
+#include "../EC/EC.h"
+#include "../Game_controler.h"
 
 extern Entity_manager manager;
 extern const char*    map_tileset;

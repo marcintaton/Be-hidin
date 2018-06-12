@@ -1,6 +1,7 @@
 #include "State_player_run.h"
 #include <iostream>
 #include "../Collision.h"
+#include "../EC/Shooter_component.h"
 
 extern std::vector<Entity*>& colliders;
 
@@ -30,6 +31,10 @@ void State_player_run::on_keydown() {
     } else if (keys[SDL_SCANCODE_D]) {
         parent_machine->transform->velocity.x = 1;
         parent_machine->sprite->flip(false);
+    }
+    if (keys[SDL_SCANCODE_E]) {
+        parent_machine->parent_entity->get_component<Shooter_component>()
+            .shot();
     }
 
     // switch (Game_controler::event.key.keysym.sym) {

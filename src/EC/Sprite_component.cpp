@@ -79,3 +79,8 @@ void Sprite_component::flip(bool flip) {
         sprite_flip = SDL_FLIP_NONE;
     }
 }
+
+void Sprite_component::set_src_rect(int x, int y) {
+    src.x = x;
+    src.y = y;
+}

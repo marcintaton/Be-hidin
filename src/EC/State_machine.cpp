@@ -1,14 +1,20 @@
 #include "State_machine.h"
 #include "../States/States.h"
 
-State_machine::State_machine() {
+State_machine::State_machine(std::string type) {
 
-    states.push_back(new State_player_idle(this));
-    states.push_back(new State_player_run(this));
-    states.push_back(new State_player_jump(this));
-    states.push_back(new State_player_climb_l(this));
-    states.push_back(new State_player_climb_r(this));
-    active = states[0];
+    if (type == "player") {
+        states.push_back(new State_player_idle(this));
+        states.push_back(new State_player_run(this));
+        states.push_back(new State_player_jump(this));
+        states.push_back(new State_player_climb_l(this));
+        states.push_back(new State_player_climb_r(this));
+        active = states[0];
+    } else if (type == "enemy_turret") {
+        states.push_back(new State_turret_idle(this));
+        states.push_back(new State_turret_active(this));
+        active = states[1];
+    }
 }
 
 State_machine::~State_machine() {
@@ -37,7 +43,7 @@ void State_machine::quick_update() {
 void State_machine::update() {
 
     active->update();
-    std::cout << active->name << std::endl;
+    // std::cout << active->name << std::endl;
 }
 
 void State_machine::late_update() {

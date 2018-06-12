@@ -1,6 +1,6 @@
 #include "Texture_manager.h"
-#include "SDL2/SDL_image.h"
 #include <SDL2/SDL.h>
+#include "SDL2/SDL_image.h"
 
 SDL_Texture* Texture_manager::load_texture(const char* file_name) {
 
@@ -17,5 +17,15 @@ void Texture_manager::draw(SDL_Texture*     texture,
                            SDL_RendererFlip flip) {
 
     SDL_RenderCopyEx(Game_controler::renderer.get(), texture, &src, &dst, NULL,
+                     NULL, flip);
+}
+
+void Texture_manager::draw(SDL_Texture*     texture,
+                           SDL_Rect         src,
+                           SDL_Rect         dst,
+                           double           angle,
+                           SDL_RendererFlip flip) {
+
+    SDL_RenderCopyEx(Game_controler::renderer.get(), texture, &src, &dst, angle,
                      NULL, flip);
 }

@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include <vector>
-#include "EC/Transform_component.h"
+#include "../EC/Transform_component.h"
 
 class Transform_component;
 
@@ -16,16 +16,24 @@ class Camera {
     int                   offset_y;
     int                   resolutiom_w;
     int                   resolutiom_h;
+    static Camera*        instance;
 
-   public:
     Camera(Transform_component*  _player_trans,
            std::vector<Entity*>& _tiles,
            std::vector<Entity*>& _colliders,
            int                   _resolutiom_w,
            int                   _resolutiom_h);
+
+   public:
     ~Camera();
 
-    void update();
+    static Camera* Get_instance();
+    static void    Create_instance(Transform_component*  _player_trans,
+                                   std::vector<Entity*>& _tiles,
+                                   std::vector<Entity*>& _colliders,
+                                   int                   _resolutiom_w,
+                                   int                   _resolutiom_h);
+    void           update();
 };
 
 #endif

@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+Camera* Camera::instance = nullptr;
+
 Camera::Camera(Transform_component*  _player_trans,
                std::vector<Entity*>& _tiles,
                std::vector<Entity*>& _colliders,
@@ -19,9 +21,22 @@ Camera::Camera(Transform_component*  _player_trans,
 Camera::~Camera() {
 }
 
+void Camera::Create_instance(Transform_component*  _player_trans,
+                             std::vector<Entity*>& _tiles,
+                             std::vector<Entity*>& _colliders,
+                             int                   _resolutiom_w,
+                             int                   _resolutiom_h) {
+    if (Camera::instance == nullptr) {
+        Camera::instance = new Camera(_player_trans, _tiles, _colliders,
+                                      _resolutiom_w, _resolutiom_h);
+    }
+}
+
+Camera* Camera::Get_instance() {
+    return Camera::instance;
+}
+
 void Camera::update() {
-    // std::cout << player_trans->position.x << " " << player_trans->position.y
-    //           << std::endl;
 
     if (player_trans->position.x > resolutiom_w) {
         player_trans->position.x = 0;

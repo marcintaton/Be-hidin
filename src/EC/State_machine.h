@@ -22,7 +22,7 @@ class State_machine : public Component {
     Transform_component* transform;
     Sprite_component*    sprite;
 
-    State_machine();
+    State_machine(std::string type);
     ~State_machine();
 
     void set_active(std::string name);

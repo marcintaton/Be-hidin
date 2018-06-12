@@ -1,7 +1,7 @@
 #ifndef TILE_MAP_H
 #define TILE_MAP_H
 
-#include "Game_controler.h"
+#include "../Game_controler.h"
 
 class Tile_map {
 

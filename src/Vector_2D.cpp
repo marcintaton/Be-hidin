@@ -1,4 +1,5 @@
 #include "Vector_2D.h"
+#include <math.h>
 
 Vector_2D::Vector_2D() {
 
@@ -11,9 +12,22 @@ Vector_2D::Vector_2D(double x, double y) {
     this->y = y;
 }
 
+double Vector_2D::length() {
+
+    return std::sqrt(x * x + y * y);
+}
+
 Vector_2D& Vector_2D::zero() {
     this->x = 0;
     this->y = 0;
+    return *this;
+}
+
+Vector_2D& Vector_2D::normalize() {
+
+    double l = length();
+    this->x /= l;
+    this->y /= l;
     return *this;
 }
 

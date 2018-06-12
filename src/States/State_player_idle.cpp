@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "../Collision.h"
+#include "../EC/Shooter_component.h"
 
 extern std::vector<Entity*>& colliders;
 
@@ -37,6 +38,10 @@ void State_player_idle::on_keydown() {
             parent_machine->transform->velocity.x = 1;
             parent_machine->set_active("player_run");
             parent_machine->sprite->flip(false);
+            break;
+        case SDLK_e:
+            parent_machine->parent_entity->get_component<Shooter_component>()
+                .shot();
             break;
         default:
             break;

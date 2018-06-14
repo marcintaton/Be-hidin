@@ -30,6 +30,7 @@ void State_player_climb_l::on_keydown() {
             break;
         case SDLK_d:
             parent_machine->set_active("player_jump");
+            parent_machine->sprite->flip(false);
             parent_machine->transform->velocity.x = 1;
             break;
         default:

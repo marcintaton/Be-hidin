@@ -19,8 +19,7 @@ void State_turret_idle::on_enable() {
 }
 
 void State_turret_idle::update() {
-    std::cout << "invisible\n";
-
+    
     if (Player::act != false) {
         if (!Linecast::linecast(parent_machine->transform->position,
                                 Player::Get_instance()

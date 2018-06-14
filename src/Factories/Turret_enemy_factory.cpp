@@ -22,4 +22,5 @@ void Turret_enemy_factory::create(double      transform_x,
     turret.add_component<State_machine>("enemy_turret");
     turret.add_component<Shooter_component>(shot_cd, bullet_sprite_path);
     turret.add_group(Game_controler::g_enemies);
+    turret.add_group(Game_controler::g_map_binded);
 }

@@ -113,19 +113,19 @@ void State_player_jump::late_update() {
             parent_machine->set_active("player_idle");
         }
 
-        // if (Collision::aabb_pt_right_high(parent_machine->rollback_collider,
-        //                                   c_col) &&
-        //     Collision::aabb_pt_right_low(parent_machine->rollback_collider,
-        //                                  c_col)) {
-        //     parent_machine->set_active("player_climb_r");
-        // }
+        if (Collision::aabb_pt_right_high(parent_machine->rollback_collider,
+                                          c_col) &&
+            Collision::aabb_pt_right_low(parent_machine->rollback_collider,
+                                         c_col)) {
+            parent_machine->set_active("player_climb_r");
+        }
 
-        // if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
-        //                                  c_col) &&
-        //     Collision::aabb_pt_left_low(parent_machine->rollback_collider,
-        //                                 c_col)) {
-        //     parent_machine->set_active("player_climb_l");
-        // }
+        if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
+                                         c_col) &&
+            Collision::aabb_pt_left_low(parent_machine->rollback_collider,
+                                        c_col)) {
+            parent_machine->set_active("player_climb_l");
+        }
 
         // if (Collision::aabb_pt_left_high(parent_machine->rollback_collider,
         //                                  c_col)) {

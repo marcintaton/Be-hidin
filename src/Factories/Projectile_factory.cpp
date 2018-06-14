@@ -16,5 +16,5 @@ void Projectile_factory::create(Vector_2D   caster,
     projectile.add_component<Collider_component>("Projectile");
     projectile.add_component<Projectile_component>();
     projectile.add_group(Game_controler::g_projectiles);
-    std::cout << "shot" << std::endl;
+    projectile.add_group(Game_controler::g_map_binded);
 }

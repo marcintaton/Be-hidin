@@ -59,6 +59,7 @@ void State_player_run::on_keydown() {
 void State_player_run::on_keyup() {
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
+
     if (!keys[SDL_SCANCODE_A] && !keys[SDL_SCANCODE_W] &&
         !keys[SDL_SCANCODE_S] && !keys[SDL_SCANCODE_D]) {
         parent_machine->set_active("player_idle");

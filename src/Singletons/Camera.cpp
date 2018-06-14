@@ -5,9 +5,10 @@ Camera* Camera::instance = nullptr;
 Camera::Camera(Transform_component*  _player_trans,
                std::vector<Entity*>& _tiles,
                std::vector<Entity*>& _colliders,
+               std::vector<Entity*>& _map_objects,
                int                   _resolutiom_w,
                int                   _resolutiom_h)
-    : tiles(_tiles), colliders(_colliders) {
+    : tiles(_tiles), colliders(_colliders), map_objects(_map_objects) {
 
     player_trans = _player_trans;
 
@@ -24,11 +25,13 @@ Camera::~Camera() {
 void Camera::Create_instance(Transform_component*  _player_trans,
                              std::vector<Entity*>& _tiles,
                              std::vector<Entity*>& _colliders,
+                             std::vector<Entity*>& _map_objects,
                              int                   _resolutiom_w,
                              int                   _resolutiom_h) {
     if (Camera::instance == nullptr) {
-        Camera::instance = new Camera(_player_trans, _tiles, _colliders,
-                                      _resolutiom_w, _resolutiom_h);
+        Camera::instance =
+            new Camera(_player_trans, _tiles, _colliders, _map_objects,
+                       _resolutiom_w, _resolutiom_h);
     }
 }
 
@@ -67,6 +70,12 @@ void Camera::update() {
                 c->get_component<Collider_component>().dst.x += offset_x;
                 c->get_component<Collider_component>().collider.y += offset_y;
                 c->get_component<Collider_component>().dst.y += offset_y;
+            }
+        }
+        for (auto& m : map_objects) {
+            if (m->has_component<Transform_component>()) {
+                m->get_component<Transform_component>().position.x += offset_x;
+                m->get_component<Transform_component>().position.y += offset_y;
             }
         }
         offset_x = 0;

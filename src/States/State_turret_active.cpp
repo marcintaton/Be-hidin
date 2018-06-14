@@ -20,8 +20,6 @@ void State_turret_active::on_enable() {
 
 void State_turret_active::update() {
 
-    std::cout << "visible\n";
-
     if (Linecast::linecast(parent_machine->transform->position,
                            Player::Get_instance()
                                ->get_component<Transform_component>()

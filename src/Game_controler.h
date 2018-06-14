@@ -39,8 +39,9 @@ class Game_controler {
         g_players,
         g_enemies,
         g_colliders,
-        g_physiccs_affected,
-        g_projectiles
+        g_map_binded,
+        g_projectiles,
+        g_pickable
     };
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;

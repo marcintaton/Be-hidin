@@ -12,6 +12,7 @@ class Camera {
     Transform_component*  player_trans;
     std::vector<Entity*>& tiles;
     std::vector<Entity*>& colliders;
+    std::vector<Entity*>& map_objects;
     int                   offset_x;
     int                   offset_y;
     int                   resolutiom_w;
@@ -21,6 +22,7 @@ class Camera {
     Camera(Transform_component*  _player_trans,
            std::vector<Entity*>& _tiles,
            std::vector<Entity*>& _colliders,
+           std::vector<Entity*>& _map_objects,
            int                   _resolutiom_w,
            int                   _resolutiom_h);
 
@@ -31,6 +33,7 @@ class Camera {
     static void    Create_instance(Transform_component*  _player_trans,
                                    std::vector<Entity*>& _tiles,
                                    std::vector<Entity*>& _colliders,
+                                   std::vector<Entity*>& _map_objects,
                                    int                   _resolutiom_w,
                                    int                   _resolutiom_h);
     void           update();

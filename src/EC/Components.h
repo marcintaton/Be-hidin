@@ -1,6 +1,8 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
+#include "Bonus_component.h"
+#include "Bonus_controller.h"
 #include "Collider_component.h"
 #include "EC.h"
 #include "Input_controller.h"

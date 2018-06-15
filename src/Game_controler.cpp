@@ -74,12 +74,12 @@ void Game_controler::initialize(const char* title,
                                  "assets/textures/turret.png", "enemy_turret",
                                  "assets/textures/projectile.png", 1);
 
-    Bonus_factory::create_speed_bonus(300, 450, 32, 32, 0.5,
-                                      "assets/textures/bonus.png", "bonus");
-    Bonus_factory::create_invis_bonus(700, 530, 32, 32, 0.5,
-                                      "assets/textures/bonus.png", "bonus");
-    Bonus_factory::create_freeze_bonus(900, 530, 32, 32, 0.5,
-                                       "assets/textures/bonus.png", "bonus");
+    Bonus_factory::create_speed_bonus(
+        300, 450, 32, 32, 0.5, "assets/textures/bonus_speed.png", "bonus");
+    Bonus_factory::create_invis_bonus(
+        700, 530, 32, 32, 0.5, "assets/textures/bonus_invis.png", "bonus");
+    Bonus_factory::create_freeze_bonus(
+        900, 530, 32, 32, 0.5, "assets/textures/bonus_freeze.png", "bonus");
 
     map.reset(new Tile_map(map_tileset, 1, 32));
 

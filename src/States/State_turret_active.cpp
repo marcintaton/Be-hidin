@@ -19,17 +19,23 @@ void State_turret_active::on_enable() {
 }
 
 void State_turret_active::update() {
+    bool invis = false;
+    if (Player::Get_instance()->get_component<Bonus_controller>().get_bonus() !=
+        nullptr) {
+        if (typeid(*(Player::Get_instance()
+                         ->get_component<Bonus_controller>()
+                         .get_bonus())) == typeid(Invis_bonus)) {
+            invis = true;
+        }
+    }
 
     if (Linecast::linecast(parent_machine->transform->position,
                            Player::Get_instance()
                                ->get_component<Transform_component>()
-                               .position)) {
-
+                               .position) ||
+        invis == true || Player::act == false) {
         parent_machine->set_active("turret_idle");
     }
 
     parent_machine->parent_entity->get_component<Shooter_component>().shot();
-    if (Player::act == false) {
-        parent_machine->set_active("turret_idle");
-    }
 }

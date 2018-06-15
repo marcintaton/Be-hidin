@@ -15,6 +15,8 @@ class Bonus_controller : public Component {
     Bonus_controller();
     ~Bonus_controller();
 
-    void update() override;
-    void add_bonus(Bonus* _bonus);
+    void   update() override;
+    void   add_bonus(Bonus* _bonus);
+    Bonus* get_bonus();
+    void   remove_bonus();
 };

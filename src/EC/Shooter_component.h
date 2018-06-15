@@ -11,6 +11,7 @@ class Shooter_component : public Component {
     std::string tex_path;
 
    public:
+    bool active;
     Shooter_component();
     Shooter_component(double cooldown, std::string path);
     ~Shooter_component();

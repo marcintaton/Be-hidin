@@ -18,13 +18,14 @@ Entity_manager manager;
 
 SDL_Event Game_controler::event;
 
-auto& map_tiles(manager.get_group(Game_controler::g_map));
-auto& players(manager.get_group(Game_controler::g_players));
-auto& enemies(manager.get_group(Game_controler::g_enemies));
-auto& map_obj(manager.get_group(Game_controler::g_map_binded));
-auto& projectiles(manager.get_group(Game_controler::g_projectiles));
+auto&                 map_tiles(manager.get_group(Game_controler::g_map));
+auto&                 players(manager.get_group(Game_controler::g_players));
+std::vector<Entity*>& enemies(manager.get_group(Game_controler::g_enemies));
+std::vector<Entity*>& map_obj(manager.get_group(Game_controler::g_map_binded));
+std::vector<Entity*>& projectiles(
+    manager.get_group(Game_controler::g_projectiles));
 std::vector<Entity*>& colliders(manager.get_group(Game_controler::g_colliders));
-auto&                 pickable(manager.get_group(Game_controler::g_pickable));
+std::vector<Entity*>& pickable(manager.get_group(Game_controler::g_pickable));
 
 Game_controler::Game_controler() {
 }
@@ -69,12 +70,16 @@ void Game_controler::initialize(const char* title,
     Player_factory::create(50, 50, 32, 32, 1, "assets/animations/player.png",
                            true);
 
-    Turret_enemy_factory::create(300, 545, 32, 32, 1,
+    Turret_enemy_factory::create(1250, 545, 32, 32, 1,
                                  "assets/textures/turret.png", "enemy_turret",
                                  "assets/textures/projectile.png", 1);
 
-    Bonus_factory::create_speed_bonus(100, 530, 32, 32, 0.5,
+    Bonus_factory::create_speed_bonus(300, 450, 32, 32, 0.5,
                                       "assets/textures/bonus.png", "bonus");
+    Bonus_factory::create_invis_bonus(700, 530, 32, 32, 0.5,
+                                      "assets/textures/bonus.png", "bonus");
+    Bonus_factory::create_freeze_bonus(900, 530, 32, 32, 0.5,
+                                       "assets/textures/bonus.png", "bonus");
 
     map.reset(new Tile_map(map_tileset, 1, 32));
 

@@ -9,6 +9,7 @@ Shooter_component::Shooter_component(double cooldown, std::string path) {
     tex_path  = path;
     shoot_cd  = cooldown * 1000;
     last_shot = 0;
+    active == true;
 }
 
 Shooter_component::~Shooter_component() {
@@ -16,7 +17,7 @@ Shooter_component::~Shooter_component() {
 
 void Shooter_component::shot() {
 
-    if (SDL_GetTicks() > (last_shot + shoot_cd)) {
+    if (SDL_GetTicks() > (last_shot + shoot_cd) && active == true) {
         last_shot = SDL_GetTicks();
 
         Projectile_factory::create(

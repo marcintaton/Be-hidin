@@ -18,13 +18,16 @@ void Player_factory::create(double      transform_x,
 
         auto& new_player(manager.add_entity());
 
-        new_player.add_component<Transform_component>(50, 50, 32, 32, 1);
+        new_player.add_component<Transform_component>(transform_x, transform_y,
+                                                      transform_h, transform_w,
+                                                      transform_scale);
         new_player.add_component<Sprite_component>(sprite_file_path.c_str(),
                                                    true);
         new_player.add_component<Input_controller>();
         new_player.add_component<Collider_component>("player");
         new_player.add_component<State_machine>("player");
         new_player.add_component<Bonus_controller>();
+        new_player.add_component<Inventory_component>();
         new_player.add_group(Game_controler::g_players);
 
         Player::Set_instance(&new_player);

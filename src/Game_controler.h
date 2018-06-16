@@ -14,10 +14,13 @@ class Game_controler {
 
    private:
     int                                               loop_cnt;
-    bool                                              running;
     std::unique_ptr<SDL_Window, SDL_window_destroyer> window;
+    int                                               w;
+    int                                               h;
 
    public:
+    static bool running;
+
     Game_controler();
 
     ~Game_controler();
@@ -34,6 +37,9 @@ class Game_controler {
     void clear();
     bool is_running();
 
+    void create_lvl_1();
+    void create_lvl_2();
+
     enum grup_tags : std::size_t {
         g_map,
         g_players,
@@ -41,7 +47,8 @@ class Game_controler {
         g_colliders,
         g_map_binded,
         g_projectiles,
-        g_pickable
+        g_pickable,
+        g_static_map_elems
     };
 
     static std::unique_ptr<SDL_Renderer, SDL_renderer_destroyer> renderer;

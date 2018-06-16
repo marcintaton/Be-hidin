@@ -124,6 +124,7 @@ class Entity_manager {
     void                  add_to_group(Entity* entity, group grp);
     std::vector<Entity*>& get_group(group grp);
     Entity&               add_entity();
+    void                  clear();
 };
 
 #endif

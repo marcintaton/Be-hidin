@@ -1,6 +1,8 @@
 #include "Projectile_factory.h"
 #include <SDL2/SDL.h>
 
+extern Entity_manager manager;
+
 void Projectile_factory::create(Vector_2D   caster,
                                 Vector_2D   dst,
                                 std::string tex_path) {

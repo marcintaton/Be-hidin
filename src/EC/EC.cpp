@@ -135,3 +135,6 @@ Entity& Entity_manager::add_entity() {
 
     return *e;
 }
+
+void Entity_manager::clear() {
+}

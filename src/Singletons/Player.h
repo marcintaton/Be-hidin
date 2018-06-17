@@ -12,4 +12,5 @@ class Player {
     static void    Set_instance(Entity* _instance);
     static Entity* Get_instance();
     static void    Remove_instance();
+    static void    Nullify();
 };

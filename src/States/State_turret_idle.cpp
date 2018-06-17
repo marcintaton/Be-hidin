@@ -34,7 +34,11 @@ void State_turret_idle::update() {
         !Linecast::linecast(parent_machine->transform->position,
                             Player::Get_instance()
                                 ->get_component<Transform_component>()
-                                .position)) {
+                                .position) &&
+        Vector_2D::distance(parent_machine->transform->position,
+                            Player::Get_instance()
+                                ->get_component<Transform_component>()
+                                .position) <= 500) {
 
         parent_machine->set_active("turret_active");
     }

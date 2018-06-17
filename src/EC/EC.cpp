@@ -137,4 +137,8 @@ Entity& Entity_manager::add_entity() {
 }
 
 void Entity_manager::clear() {
+
+    for (auto& e : entities_vector) {
+        e->set_inactive();
+    }
 }

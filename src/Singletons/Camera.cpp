@@ -39,6 +39,10 @@ Camera* Camera::Get_instance() {
     return Camera::instance;
 }
 
+void Camera::Remove_instance() {
+    Camera::instance = nullptr;
+}
+
 void Camera::update() {
 
     if (player_trans->position.x > resolutiom_w) {

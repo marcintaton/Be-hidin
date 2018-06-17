@@ -36,6 +36,7 @@ class Camera {
                                    std::vector<Entity*>& _map_objects,
                                    int                   _resolutiom_w,
                                    int                   _resolutiom_h);
+    static void    Remove_instance();
     void           update();
 };
 

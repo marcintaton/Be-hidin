@@ -12,6 +12,14 @@ Vector_2D::Vector_2D(double x, double y) {
     this->y = y;
 }
 
+double Vector_2D::distance(const Vector_2D& a, const Vector_2D& b) {
+
+    double x = std::abs(a.x - b.x);
+    double y = std::abs(a.y - b.y);
+
+    return std::sqrt(x * x + y * y);
+}
+
 double Vector_2D::length() {
 
     return std::sqrt(x * x + y * y);

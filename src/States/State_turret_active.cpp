@@ -33,7 +33,11 @@ void State_turret_active::update() {
                            Player::Get_instance()
                                ->get_component<Transform_component>()
                                .position) ||
-        invis == true || Player::act == false) {
+        invis == true || Player::act == false ||
+        Vector_2D::distance(parent_machine->transform->position,
+                            Player::Get_instance()
+                                ->get_component<Transform_component>()
+                                .position) > 500) {
         parent_machine->set_active("turret_idle");
     }
 

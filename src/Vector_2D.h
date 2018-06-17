@@ -12,9 +12,10 @@ class Vector_2D {
     Vector_2D();
     Vector_2D(double x, double y);
 
-    double     length();
-    Vector_2D& zero();
-    Vector_2D& normalize();
+    static double distance(const Vector_2D& a, const Vector_2D& b);
+    double        length();
+    Vector_2D&    zero();
+    Vector_2D&    normalize();
 
     Vector_2D& add(const Vector_2D& other);
     Vector_2D& subtract(const Vector_2D& other);

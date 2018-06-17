@@ -20,6 +20,7 @@ class Game_controler {
 
    public:
     static bool running;
+    bool        quit = false;
 
     Game_controler();
 
@@ -36,6 +37,8 @@ class Game_controler {
     void render();
     void clear();
     bool is_running();
+
+    static void lvl_clear();
 
     void create_lvl_1();
     void create_lvl_2();

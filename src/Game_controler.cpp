@@ -65,21 +65,17 @@ void Game_controler::initialize(const char* title,
             std::cout << "renderer initialized" << std::endl;
             SDL_SetRenderDrawColor(renderer.get(), 0, 128, 255, 255);
         }
-
-        running = true;
-    } else {
-        running = false;
     }
+
+    running = false;
 
     w = width;
     h = height;
-
-    create_lvl_1();
 }
 
 void Game_controler::create_lvl_1() {
 
-    Player_factory::create(100, 540, 32, 32, 1, "assets/animations/player.png",
+    Player_factory::create(200, 540, 32, 32, 1, "assets/animations/player.png",
                            true);
 
     Turret_enemy_factory::create(1250, 545, 32, 32, 1,
@@ -103,41 +99,53 @@ void Game_controler::create_lvl_1() {
 
     map.reset(new Tile_map(map_tileset, 1, 32));
 
-    map->load_map("assets/map/level.map", 50, 40, 0, -20);
+    map->load_map("assets/map/level1.map", 50, 40, 0, -20);
 
     Camera::Create_instance(
         &(Player::Get_instance())->get_component<Transform_component>(),
         map_tiles, colliders, map_obj, w, h);
+
+    running = true;
 }
 
 void Game_controler::create_lvl_2() {
 
-    Player_factory::create(100, 540, 32, 32, 1, "assets/animations/player.png",
+    lvl_clear();
+
+    Player_factory::create(200, 540, 32, 32, 1, "assets/animations/player.png",
                            true);
 
-    Turret_enemy_factory::create(1250, 545, 32, 32, 1,
-                                 "assets/textures/turret.png", "enemy_turret",
-                                 "assets/textures/projectile.png", 1);
+    Door_factory::create(50, 513, 32, 32, 2, "assets/textures/door.png");
 
-    Bonus_factory::create_speed_bonus(
-        300, 450, 32, 32, 0.5, "assets/textures/bonus_speed.png", "bonus");
-    Bonus_factory::create_invis_bonus(
-        700, 530, 32, 32, 0.5, "assets/textures/bonus_invis.png", "bonus");
-    Bonus_factory::create_freeze_bonus(
-        900, 530, 32, 32, 0.5, "assets/textures/bonus_freeze.png", "bonus");
-
-    Door_factory::create(50, 545, 32, 32, 1, "assets/textures/door.png");
-
-    Item_factory::create(300, 540, 32, 32, 0.7, "assets/textures/door.png", 0,
-                         true);
+    Item_factory::create(300, 540, 32, 32, 0.7,
+                         "assets/textures/quest_item.png", 0, true);
 
     map.reset(new Tile_map(map_tileset, 1, 32));
 
-    map->load_map("assets/map/level.map", 50, 40, 0, -20);
+    map->load_map("assets/map/level2.map", 50, 40, 0, -20);
 
     Camera::Create_instance(
         &(Player::Get_instance())->get_component<Transform_component>(),
         map_tiles, colliders, map_obj, w, h);
+
+    running = true;
+}
+
+void Game_controler::lvl_clear() {
+    manager.clear();
+    manager.remove_inactive();
+    map_tiles.clear();
+    players.clear();
+    enemies.clear();
+    map_obj.clear();
+    projectiles.clear();
+    colliders.clear();
+    pickable.clear();
+    static_map_elems.clear();
+    map.reset();
+    Camera::Remove_instance();
+    Player::Remove_instance();
+    Player::Nullify();
 }
 
 void Game_controler::handle_events() {
@@ -147,6 +155,7 @@ void Game_controler::handle_events() {
     switch (event.type) {
         case SDL_QUIT:
             running = false;
+            quit    = true;
             break;
         default:
             break;
@@ -194,8 +203,6 @@ void Game_controler::render() {
     for (auto& c : colliders) {
         c->draw();
     }
-
-    // manager.draw();
 
     SDL_RenderPresent(renderer.get());
 }

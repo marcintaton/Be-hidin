@@ -19,3 +19,7 @@ void Player::Remove_instance() {
     // Player::instance = nullptr;
     Player::act = false;
 }
+
+void Player::Nullify() {
+    Player::instance = nullptr;
+}

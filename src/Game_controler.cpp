@@ -144,7 +144,6 @@ void Game_controler::lvl_clear() {
     static_map_elems.clear();
     map.reset();
     Camera::Remove_instance();
-    Player::Remove_instance();
     Player::Nullify();
 }
 
@@ -206,9 +205,9 @@ void Game_controler::render() {
         p->draw();
     }
 
-    for (auto& c : colliders) {
-        c->draw();
-    }
+    // for (auto& c : colliders) {
+    //     c->draw();
+    // }
 
     SDL_RenderPresent(renderer.get());
 }

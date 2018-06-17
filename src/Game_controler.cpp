@@ -160,6 +160,12 @@ void Game_controler::handle_events() {
         default:
             break;
     }
+
+    if (Player::act == false) {
+        running = false;
+        quit    = true;
+        std::cout << "Game over" << std::endl;
+    }
 }
 
 void Game_controler::update() {
